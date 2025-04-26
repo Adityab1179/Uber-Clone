@@ -23,14 +23,14 @@ const userSchema = new mongoose.Schema({
   password:{
     type:String,
     required:true,
-    selected:false
+    select:false
   },
   socketId:{
     type:String,
   }
 });
 userSchema.methods.generateAuthToken=function(){
-    const token=jsonwebtoken.sign({_id:this.id},process.env.JWT_SECRET)
+    const token=jsonwebtoken.sign({_id:this.id},process.env.JWT_SECRET,{expiresIn:'24h'})
     return token
 }
 userSchema.methods.comparePassword=async function (password){
