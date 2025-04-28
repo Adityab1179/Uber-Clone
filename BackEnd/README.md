@@ -1,4 +1,4 @@
-# User Registration & Login API Documentation
+# User & Captain Registration & Login API Documentation
 
 ## Endpoint: `/user/register`
 
