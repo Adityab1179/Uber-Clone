@@ -14,9 +14,7 @@ The request body must be in JSON format and include the following fields:
 - `fullName`: An object containing:
   - `firstName`: (String) Required. Must be at least 3 characters long.
   - `lastName`: (String) Required. Must be at least 3 characters long.
-  
 - `email`: (String) Required. Must be a valid email format and at least 5 characters long.
-
 - `password`: (String) Required. Must be at least 6 characters long.
 
 ### Example Request
@@ -127,6 +125,13 @@ This endpoint logs out an authenticated user by blacklisting the provided JWT to
 ### Request
 No request body is required.
 
+### Example Request
+Using cURL:
+```bash
+curl -X GET http://localhost:3000/user/logout \
+  -H "Authorization: Bearer your_jwt_token_here"
+```
+
 ### Response
 On success, the server will respond with a status code of `200 OK` and a JSON object with a logout confirmation message.
 
@@ -140,4 +145,73 @@ On success, the server will respond with a status code of `200 OK` and a JSON ob
 ### Status Codes
 - `200 OK`: Logout is successful.
 - `400 Bad Request`: Unauthorized access attempted or token has already been blacklisted.
+- `500 Internal Server Error`: An error occurred on the server while processing the request.
+
+---
+
+## Endpoint: `/captains/register`
+
+### Description
+This endpoint allows a new captain to register by providing their basic details along with vehicle information. Upon successful registration, the server returns a JWT token for authentication and the captain details. Note that the captain is set to inactive on registration.
+
+### Request Method
+- `POST`
+
+### Request Body
+The request body must be in JSON format and include the following fields:
+
+- `firstName`: (String) Required. Must be at least 3 characters long.
+- `lastName`: (String) Optional. Can be provided alongside the first name.
+- `email`: (String) Required. Must be a valid email format.
+- `password`: (String) Required. Must be at least 6 characters long.
+- `color`: (String) Required. The color of the vehicle. Must be at least 3 characters long.
+- `number`: (String) Required. A unique identifier for the captain or vehicle. Must be at least 3 characters long.
+- `plateNumber`: (String) Required. Must be at least 3 characters long.
+- `type`: (String) Required. Must be one of: `car`, `bike`, or `auto`.
+- `capacity`: (Number) Required. Must be a numeric value indicating vehicle capacity.
+
+### Example Request
+```json
+{
+  "firstName": "Steve",
+  "lastName": "Smith",
+  "email": "captain@example.com",
+  "password": "securePassword123",
+  "color": "Red",
+  "number": "CAP123",
+  "plateNumber": "XYZ789",
+  "type": "car",
+  "capacity": 4
+}
+```
+
+### Response
+On success, the server will respond with a status code of `201 Created` and a JSON object containing the token and captain details.
+
+#### Success Response Example
+```json
+{
+  "token": "your_jwt_token_here",
+  "captain": {
+    "fullName": {
+      "firstName": "Steve",
+      "lastName": "Smith"
+    },
+    "email": "captain@example.com",
+    "number": "CAP123",
+    "status": "inactive",
+    "vehicle": {
+      "color": "Red",
+      "capacity": 4,
+      "plateNumber": "XYZ789",
+      "type": "car",
+      "number": "CAP123"
+    }
+  }
+}
+```
+
+### Status Codes
+- `201 Created`: Captain successfully registered.
+- `400 Bad Request`: Validation errors occurred (e.g., missing fields, invalid input).
 - `500 Internal Server Error`: An error occurred on the server while processing the request.
