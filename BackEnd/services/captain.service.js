@@ -10,6 +10,7 @@ const createCaptain = async ({
   type,
   capacity,
 }) => {
+ 
   if (!firstName|| !email || !password|| !color || !number || !plateNumber || !type || !capacity) {
     console.log("error")
   }
@@ -23,11 +24,10 @@ const createCaptain = async ({
     number,
     status: "inactive",
     vehicle: {
-      color,
-      capacity,
-      plateNumber,
-      type,
-      number,
+      color:color,
+      capacity:capacity,
+      plateNumber:plateNumber,
+      category:type,
     },
   });
 return captain;

@@ -53,7 +53,7 @@ const captainSchema=new mongoose.Schema({
             required:true,
             unique:true
         },
-        type:{
+        category:{
             type:String,
             required:true,
             enum:["car","bike","auto"]
