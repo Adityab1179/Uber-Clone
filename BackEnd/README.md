@@ -1,4 +1,4 @@
-# User & Captain Registration & Login API Documentation
+# User Registration & Login API Documentation
 
 ## User Endpoints
 
@@ -197,5 +197,126 @@ On success, the server responds with a status code of `201 Created` and a JSON o
 
 **Status Codes:**
 - `201 Created`: Captain successfully registered.
-- `400 Bad Request`: Validation errors occurred (e.g., missing fields, invalid input).
-- `500 Internal Server Error`: An error occurred on the server while processing the request.
+- `400 Bad Request`: Validation errors (missing fields, invalid input).
+- `500 Internal Server Error`: Server error.
+
+---
+
+### Endpoint: `/captains/login`
+
+**Description:**  
+This endpoint allows a registered captain to log in using their email and password. Successful authentication returns a JWT token.
+
+**Request Method:**  
+`POST`
+
+**Request Body:**  
+- `email`: (String) Required. Valid email format.
+- `password`: (String) Required. Minimum 6 characters.
+
+**Example Request:**
+```json
+{
+  "email": "captain@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response:**  
+On success, the server responds with a status code of `200 OK` and sets a cookie containing the JWT token.
+
+**Success Response Example:**
+```json
+{
+  "token": "your_jwt_token_here"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Captain successfully logged in.
+- `400 Bad Request`: Validation errors or missing fields.
+- `401 Unauthorized`: Invalid email or password.
+- `500 Internal Server Error`: Server error.
+
+---
+
+### Endpoint: `/captains/profile`
+
+**Description:**  
+Retrieves the profile of an authenticated captain.
+
+**Request Method:**  
+`GET`
+
+**Authentication:**  
+Captain must be authenticated via JWT token provided in cookies or the `Authorization` header.
+
+**Example Request (cURL):**
+```bash
+curl -X GET http://localhost:3000/captains/profile \
+  -H "Authorization: Bearer your_jwt_token_here"
+```
+
+**Response:**  
+On success, returns a status code `200 OK` with the captain's profile information.
+
+**Success Response Example:**
+```json
+{
+  "captain": {
+    "fullName": {
+      "firstName": "Steve",
+      "lastName": "Smith"
+    },
+    "email": "captain@example.com",
+    "number": "CAP123",
+    "status": "inactive",
+    "vehicle": {
+      "color": "Red",
+      "capacity": 4,
+      "plateNumber": "XYZ789",
+      "category": "car"
+    }
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Profile retrieved successfully.
+- `400 Bad Request`: Captain not found.
+- `500 Internal Server Error`: Server error.
+
+---
+
+### Endpoint: `/captains/logout`
+
+**Description:**  
+Logs out an authenticated captain by blacklisting the JWT token and clearing the authentication cookie. After logout, the captain must log in again to access protected routes.
+
+**Request Method:**  
+`GET`
+
+**Authentication:**  
+Captain must be authenticated via JWT token provided in cookies or the `Authorization` header.
+
+**Example Request (cURL):**
+```bash
+curl -X GET http://localhost:3000/captains/logout \
+  -H "Authorization: Bearer your_jwt_token_here"
+```
+
+**Response:**  
+On success, returns a status code `200 OK` with a logout confirmation message and clears the captain's token.
+
+**Success Response Example:**
+```json
+{
+  "message": "Logout Succesfull",
+  "captain": null
+}
+```
+
+**Status Codes:**
+- `200 OK`: Logout successful.
+- `400 Bad Request`: Token does not exist or unauthorized access.
+- `500 Internal Server Error`: Server error.
