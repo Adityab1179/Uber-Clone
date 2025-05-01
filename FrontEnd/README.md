@@ -28,6 +28,32 @@ FrontEnd/
 │       └── UserRegistser.jsx   // User registration component
 ```
 
+## Key Components
+
+- **main.jsx:**  
+  The main entry point for the React application. It renders the root component (`App`) into the DOM and applies React's StrictMode for highlighting potential problems.
+
+- **App.jsx:**  
+  Sets up the application's routing using `react-router-dom`. Defines the main layout and all routes, including home, user login, captain login, user registration, and captain registration.
+
+- **Home.jsx:**  
+  The landing page of the application. Displays the Uber logo and a "Get Started" section with a button that navigates users to the login page.
+
+- **UserLogin.jsx:**  
+  Handles user login. Collects email and password, submits them to the backend `/users/login` endpoint, and provides a link to create a new account or sign in as a captain.
+
+- **CaptainLogin.jsx:**  
+  Handles captain login. Collects email and password, submits them to the backend `/captains/login` endpoint, and provides a link to register as a captain or sign in as a user.
+
+- **UserRegistser.jsx:**  
+  Handles user registration. Collects first name, last name, email, and password, then submits the data to the backend `/users/signUp` endpoint. Includes a link for existing users to log in and displays a reCAPTCHA notice.
+
+- **CaptainRegister.jsx:**  
+  Handles captain registration. Collects first name, last name, email, and password, then submits the data to the backend `/captains/login` endpoint. Also provides a link to sign in as a user.
+
+- **README.md:**  
+  This file. Provides setup, usage, and component explanations.
+
 ## Getting Started
 
 ### Prerequisites
@@ -78,7 +104,7 @@ Explanation of Key Components
 The application uses react-router-dom to handle navigation. The App.jsx file sets up the router with a primary layout component (AppLayout) and defines nested routes for various views such as home, login, and registration.
 
 2. Component Structure:
-Individual components such as UserLogin and CaptainLogin are responsible for rendering specific portions of the UI and handling user interactions through forms. Each component fetches the necessary data from the backend endpoints.
+Individual components such as UserLogin and CaptainLogin etc are responsible for rendering specific portions of the UI and handling user interactions through forms. Each component fetches the necessary data from the backend endpoints.
 
 3. Styling with Tailwind CSS:
 Tailwind CSS is used extensively across the project to quickly style components using utility-first classes. This approach makes it easier to implement responsive design and maintain a consistent look throughout the app.
