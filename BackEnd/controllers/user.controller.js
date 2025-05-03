@@ -7,8 +7,8 @@ module.exports.registerUser = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { fullName, email, password } = req.body;
-  if (!fullName || !email || !password) {
+  const { firstName,lastName, email, password } = req.body;
+  if (!firstName || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
   const existingUser = await userModel.findOne({ email });
@@ -17,8 +17,8 @@ module.exports.registerUser = async (req, res, next) => {
   }
   const hashedPassword = await userModel.hashPassword(password);
   const user = await userService.createUser({
-    firstName: fullName.firstName,
-    lastName: fullName.lastName,
+    firstName: firstName,
+    lastName: lastName,
     email,
     password: hashedPassword,
   });
@@ -53,5 +53,4 @@ module.exports.logout=async(req,res,next)=>{
     await blackListedToken.create({token})
     res.clearCookie('token')
     res.status(200).json({message:"Log out Successfull"})
-
 }

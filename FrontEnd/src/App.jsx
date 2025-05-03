@@ -1,11 +1,13 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Home from "./components/Home"; // corrected path
+import LandingScreen from "./components/LandingScreen"; // corrected path
 import UserLogin from "./components/UserLogin";
 import CaptainLogin from "./components/CaptainLogin";
 import CaptainRegister from "./components/CaptainRegister";
 import UserRegistser from "./components/UserRegistser";
-
+import Home from "./components/Home";
+import UserProtectedWrapper from "./components/userProtectedWrapper";
+import UserLogout from "./components/UserLogout";
 function AppLayout() {
   return (
     <div>
@@ -21,7 +23,7 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <LandingScreen />,
       },
       {
         path: "/login",
@@ -39,6 +41,18 @@ const appRouter = createBrowserRouter([
         path: "/signUp",
         element: <UserRegistser />,
       },
+      {
+        path: "/home",
+        element: (
+          <UserProtectedWrapper>
+            <Home />
+          </UserProtectedWrapper>
+        ),
+      },
+      {
+        path:"/logout",
+        element:(<UserProtectedWrapper><UserLogout/></UserProtectedWrapper>)
+      }
     ],
   },
 ]);

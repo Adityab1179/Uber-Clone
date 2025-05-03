@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { UserContextData } from "../context/UserContext";
+import { useContext } from "react";
 
 function UserRegistser() {
+  const navigate=useNavigate()
+  const {userData,setUserData}=useContext(UserContextData)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,15 +20,22 @@ function UserRegistser() {
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
-    const response = await fetch("http://localhost:4000/users/signUp", {
+    
+    const response = await fetch("http://localhost:4000/users/register", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify(formData),
     });
-    const data = await response.json();
+    if(response.ok){
+      const data = await response.json();
+    console.log(data)
+    setUserData(data.user)
+    localStorage.setItem('token',data.token)
+      navigate("/home")
+    }
+    
   };
   
   return (
@@ -83,7 +94,7 @@ function UserRegistser() {
           />
 
           <button className="w-full text-center font-medium bg-[#111] text-white px-4 py-3 rounded mb-5">
-            Login
+            Create Account
           </button>
         </form>
         <p className="text-center">

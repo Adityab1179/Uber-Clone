@@ -11,7 +11,8 @@ module.exports.authUser = async (req, res, next) => {
   }
   const blockedToken = await blackListedToken.findOne({ token: token });
   if (blockedToken) {
-    return res.status(400).json({ message: "Unauthorised access not allowed" });
+    console.log( ` Unauthorised access not allowed,blockedtoken = ${blockedToken}` );
+    return res.status(400).json({message:"Unauthorised Access"})
   }
   const decoded_token = jwt.verify(token, process.env.JWT_SECRET);
   const user = await userModel.findById(decoded_token._id);
@@ -33,7 +34,7 @@ module.exports.authCaptain = async (req, res, next) => {
     if (blockedToken) {
       return res
         .status(400)
-        .json({ message: "Unauthorised access not allowed" });
+        .json({ message: "Unauthorised access not allowed",blockedtoken:blockedToken });
     }
     const decoded_token = jwt.verify(tokenReceived, process.env.JWT_SECRET);
     const captain = await captainModel.findById(decoded_token._id);

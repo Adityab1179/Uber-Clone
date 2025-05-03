@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import { UserContextData } from "../context/UserContext";
 
 function UserLogin() {
+  const {userData,setUserData}=useContext(UserContextData)
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -10,16 +13,23 @@ function UserLogin() {
     setFormData((prevdata) => ({ ...prevdata, [e.target.name]: e.target.value }));
   };
   const handleFormSubmit=async(e)=>{
+    console.log(`${import.meta.env.VITE_base_Url}`)
     e.preventDefault()
-    const response=await fetch("http://localhost:4000/users/login",{
+    const response=await fetch( `${import.meta.env.VITE_base_Url}/users/login`,{
       method:"POST",
       headers:{
         "Content-type":"application/json"
       },
       body:JSON.stringify(formData)
     })
-    const data=await response.json()
-    console.log(data)
+    if(response.ok){
+      const data=await response.json()
+      console.log(data)
+      setUserData(data.user)
+      localStorage.setItem('token',data.token)
+      navigate("/home")
+    }
+    
   }
   return (
     <div className="h-screen flex flex-col justify-between p-7">
