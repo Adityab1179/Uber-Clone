@@ -1,19 +1,19 @@
 const userModel = require("../models/User_model");
 const userService = require("../services/user.service");
-const blackListedToken=require("../models/blackListTokens.model")
+const blackListedToken = require("../models/blackListTokens.model");
 const { validationResult } = require("express-validator");
 module.exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { firstName,lastName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   if (!firstName || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
   const existingUser = await userModel.findOne({ email });
-  if(existingUser){
-    res.status(400).json({message:"User already exists"})
+  if (existingUser) {
+    res.status(400).json({ message: "User already exists" });
   }
   const hashedPassword = await userModel.hashPassword(password);
   const user = await userService.createUser({
@@ -46,11 +46,14 @@ module.exports.loginUser = async (req, res, next) => {
 module.exports.getUserProfile = async (req, res, next) => {
   res.status(200).json(req.user);
 };
-module.exports.logout=async(req,res,next)=>{
-    
-    const token=req.cookies.token||req.headers.authorization?.split(" ")[1];
-    req.user=null
-    await blackListedToken.create({token})
-    res.clearCookie('token')
-    res.status(200).json({message:"Log out Successfull"})
-}
+module.exports.logout = async (req, res, next) => {
+  try {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    req.user = null;
+    await blackListedToken.create({ token });
+    res.clearCookie("token");
+    res.status(200).json({ message: "Log out Successfull" });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error" });
+  }
+};

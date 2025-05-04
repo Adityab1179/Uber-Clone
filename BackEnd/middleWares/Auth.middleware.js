@@ -4,6 +4,8 @@ const blackListedToken = require("../models/blackListTokens.model");
 const bcrypt = require("bcrypt");
 const captainModel = require("../models/captain.model");
 module.exports.authUser = async (req, res, next) => {
+  console.log("authMiddleware running for:", req.originalUrl);
+
     try {
   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
   if (!token) {
@@ -11,7 +13,7 @@ module.exports.authUser = async (req, res, next) => {
   }
   const blockedToken = await blackListedToken.findOne({ token: token });
   if (blockedToken) {
-    console.log( ` Unauthorised access not allowed,blockedtoken = ${blockedToken}` );
+    // console.log( ` Unauthorised access not allowed,blockedtoken = ${blockedToken}` );
     return res.status(400).json({message:"Unauthorised Access"})
   }
   const decoded_token = jwt.verify(token, process.env.JWT_SECRET);

@@ -51,7 +51,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path:"/logout",
-        element:(<UserProtectedWrapper><UserLogout/></UserProtectedWrapper>)
+        element:(<UserLogout/>)
       }
     ],
   },
