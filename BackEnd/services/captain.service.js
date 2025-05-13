@@ -7,11 +7,11 @@ const createCaptain = async ({
   color,
   number,
   plateNumber,
-  type,
+  vehicleType,
   capacity,
 }) => {
  
-  if (!firstName|| !email || !password|| !color || !number || !plateNumber || !type || !capacity) {
+  if (!firstName|| !email || !password|| !color || !number || !plateNumber || !vehicleType || !capacity) {
     console.log("error")
   }
   const captain = await captainModel.create({
@@ -27,7 +27,7 @@ const createCaptain = async ({
       color:color,
       capacity:capacity,
       plateNumber:plateNumber,
-      category:type,
+      vehicleType:vehicleType,
     },
   });
 return captain;

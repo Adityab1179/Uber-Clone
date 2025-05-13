@@ -5,9 +5,11 @@ import UserLogin from "./components/UserLogin";
 import CaptainLogin from "./components/CaptainLogin";
 import CaptainRegister from "./components/CaptainRegister";
 import UserRegistser from "./components/UserRegistser";
-import Home from "./components/Home";
+import UserHome from "./components/UserHome";
 import UserProtectedWrapper from "./components/userProtectedWrapper";
 import UserLogout from "./components/UserLogout";
+import CaptainHome from "./components/CaptainHome";
+import CaptainProtectedWrapper from "./components/CaptainProtectedWrapper";
 function AppLayout() {
   return (
     <div>
@@ -45,13 +47,18 @@ const appRouter = createBrowserRouter([
         path: "/home",
         element: (
           <UserProtectedWrapper>
-            <Home />
+            <UserHome />
           </UserProtectedWrapper>
         ),
       },
       {
         path:"/logout",
         element:(<UserLogout/>)
+      },{
+        path:"/captain-home",
+        element:<CaptainProtectedWrapper>
+        <CaptainHome/>
+        </CaptainProtectedWrapper>
       }
     ],
   },

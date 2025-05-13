@@ -1,4 +1,5 @@
 const captainModel = require("../models/captain.model");
+const userModel=require('../models/User_model')
 const {createCaptain} = require("../services/captain.service");
 const {validationResult} = require("express-validator");
 const blackListedToken=require("../models/blackListTokens.model")
@@ -18,7 +19,7 @@ const registerCaptain = async (req, res, next) => {
     color,
     number,
     plateNumber,
-    type,
+    vehicleType,
     capacity,
   } = req.body;
   try {
@@ -29,13 +30,19 @@ const registerCaptain = async (req, res, next) => {
       !color ||
       !number ||
       !plateNumber ||
-      !type ||
+      !vehicleType ||
       !capacity
     ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
+    }
+    const existingUser=await userModel.findOne({email})
+    if(existingUser){
+      return res.status(400).json({
+        message:"Already Registred as User"
+      })
     }
     const existingCaptain = await captainModel.findOne({ email });
     if (existingCaptain) {
@@ -54,7 +61,7 @@ const registerCaptain = async (req, res, next) => {
       color,
       capacity,
       plateNumber,
-      type,
+      vehicleType,
     });
     const token = await captain.generateAuthToken();
     res.cookie("token", token);
@@ -88,7 +95,7 @@ const loginCaptain=async(req,res,next)=>{
   const token= await captain.generateAuthToken();
   res.cookie('token',token)
   res.status(200).json({
-    token
+    token,captain
   })
 }
 

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useContext } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import { CaptainContextData } from "../context/CaptainContext";
 
 function CaptainRegister() {
+  const {setCaptainData}=useContext(CaptainContextData)
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -14,6 +17,7 @@ function CaptainRegister() {
     capacity: "",
   });
   const handleFormData = (e) => {
+    console.log(formData)
     setFormData((prevdata) => ({
       ...prevdata,
       [e.target.name]: e.target.value,
@@ -21,6 +25,7 @@ function CaptainRegister() {
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log("req submited")
     const response = await fetch("http://localhost:4000/captains/register", {
       method: "POST",
       headers: {
@@ -29,8 +34,16 @@ function CaptainRegister() {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    console.log(data);
+      console.log(data);
+    if(response.ok){
+      
+      setCaptainData(data.captain)
+      localStorage.setItem('token',data.token)
+      navigate("/captain-home")
+    }
+    
   };
+  
   return (
     <div className="h-screen flex flex-col justify-between p-7">
       <div>

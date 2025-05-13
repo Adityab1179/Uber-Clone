@@ -1,7 +1,9 @@
-import React,{useState} from "react";
+import React,{useState,useContext} from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { CaptainContextData } from "../context/CaptainContext";
 
 const CaptainLogin = () => {
+  const {captainData,setCaptainData}=useContext(CaptainContextData)
   const navigate=useNavigate()
   const [formData, setFormData] = useState({
     email: "",
@@ -22,8 +24,15 @@ const CaptainLogin = () => {
       },
       body: JSON.stringify(formData),
     });
-    const data = await response.json();
-    console.log(data);
+    if(response.status==200){
+      
+      const data = await response.json();
+    setCaptainData(data.captain)
+    localStorage.setItem("token",data.token)
+    console.log(localStorage.getItem("token"))
+    navigate("/captain-home")
+    }
+    
   };
   return (
     <div className="h-screen flex flex-col justify-between p-7">
