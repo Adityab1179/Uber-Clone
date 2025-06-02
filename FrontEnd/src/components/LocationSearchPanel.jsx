@@ -5,12 +5,16 @@ import {
   faLocationDot,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import VehiclePanel from "./VehiclePanel";
+import SelectedVehicle from "./SelectedVehicle";
 
 const LocationSearchPanel = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [location, setLocation] = useState("");
   const [destination, setDestination] = useState("");
   const [vehiclePanel, setvehiclePanel] = useState(false);
+  const [selectedVehicle, setselectedVehicle] = useState(false);
+  const [vehicleImageURL, setVehicleImageURL] = useState("");
 
   const locationData = [
     {
@@ -102,6 +106,8 @@ const LocationSearchPanel = () => {
               onClick={() => {
                 setvehiclePanel(true);
                 setIsExpanded(false);
+                setDestination(item.name);
+                
               }}
               className="w-full"
             >
@@ -122,78 +128,22 @@ const LocationSearchPanel = () => {
             : "translate-y-full opacity-0 pointer-events-none"
         }`}
       >
-        <div className="w-full text-center text-gray-200">
-          <FontAwesomeIcon
-            icon={faAngleDown}
-            size="lg"
-            onClick={() => {
-              setvehiclePanel(false);
-              setIsExpanded(false);
-            }}
-            className="cursor-pointer transform transition-transform duration-500"
-          />
-        </div>
-        <h1 className="font-bold text-2xl mb-4">Choose a Vehicle</h1>
-        <div className="flex w-full gap-4 items-center justify-between mt-3 border-2 border-white active:border-black px-2">
-          <img
-            className="h-10"
-            src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398986/assets/90/34c200-ce29-49f1-bf35-e9d250e8217a/original/UberX.png"
-            alt=""
-          />
-          <div className="w-full">
-            <h3 className="text-xl font-semibold">
-              UberGo &nbsp;
-              <span className="text-sm">
-                <FontAwesomeIcon icon={faUser} />4
-              </span>
-            </h3>
-            <h3>2 mins away</h3>
-            <h3 className="text-gray-600 text-sm">
-              Affordable, Compact rides
-            </h3>
-          </div>
-          <h3 className="text-xl font-semibold">193.19Rs</h3>
-        </div>
-
-        <div className="flex w-full gap-4 items-center justify-between mt-1 border-2 border-white active:border-black px-2">
-          <img
-            className="h-12"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTJw6dzEo1MYXOAbONCG1oL82rxU_Bitb-g&s"
-            alt=""
-          />
-          <div className="w-full">
-            <h3 className="text-xl font-semibold">
-              UberGo &nbsp;
-              <span className="text-sm">
-                <FontAwesomeIcon icon={faUser} />1
-              </span>
-            </h3>
-            <h3>3 mins away</h3>
-            <h3 className="text-gray-600 text-sm">
-              Affordable, Motocycle rides
-            </h3>
-          </div>
-          <h3 className="text-xl font-semibold">65.97Rs</h3>
-        </div>
-
-        <div className="flex w-full gap-4 items-center justify-between mt-1 border-2 border-white active:border-black px-2">
-          <img
-            className="h-12"
-            src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
-            alt=""
-          />
-          <div className="">
-            <h3 className="text-xl font-semibold">
-              UberGo &nbsp;
-              <span className="text-sm">
-                <FontAwesomeIcon icon={faUser} />3
-              </span>
-            </h3>
-            <h3>5 mins away</h3>
-            <h3 className="text-gray-600 text-sm">Affordable, Auto rides</h3>
-          </div>
-          <h3 className="text-xl font-semibold">103.58Rs</h3>
-        </div>
+        <VehiclePanel
+          setIsExpanded={setIsExpanded}
+          setvehiclePanel={setvehiclePanel}
+          setselectedVehicle={setselectedVehicle}
+          setVehicleImageURL={setVehicleImageURL}
+          setDestination={setDestination}
+        />
+      </div>
+       <div
+        className={`fixed bottom-0 w-full transition-all duration-700 ease-in-out transform ${
+          selectedVehicle
+            ? "translate-y-0 opacity-100 z-50"
+            : "translate-y-full opacity-0 pointer-events-none"
+        }`}
+      >
+        <SelectedVehicle vehicleImageURL={vehicleImageURL} location={location} destination={destination} />
       </div>
     </div>
   );
