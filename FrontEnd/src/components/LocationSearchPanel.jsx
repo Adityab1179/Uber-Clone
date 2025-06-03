@@ -45,7 +45,6 @@ const LocationSearchPanel = () => {
       location,
       destination,
     };
-    console.log(data);
   };
 
   return (
@@ -89,6 +88,11 @@ const LocationSearchPanel = () => {
           <button
             type="submit"
             className="bg-[#f8c200] w-full mt-4 px-5 py-3 text-base font-semibold"
+            onClick={() => {
+              setIsExpanded(false);
+              setvehiclePanel(true);
+              
+            }}
           >
             Search
           </button>
@@ -106,8 +110,7 @@ const LocationSearchPanel = () => {
               onClick={() => {
                 setvehiclePanel(true);
                 setIsExpanded(false);
-                setDestination(item.name);
-                
+                setDestination(item);
               }}
               className="w-full"
             >
@@ -136,14 +139,18 @@ const LocationSearchPanel = () => {
           setDestination={setDestination}
         />
       </div>
-       <div
+      <div
         className={`fixed bottom-0 w-full transition-all duration-700 ease-in-out transform ${
           selectedVehicle
             ? "translate-y-0 opacity-100 z-50"
             : "translate-y-full opacity-0 pointer-events-none"
         }`}
       >
-        <SelectedVehicle vehicleImageURL={vehicleImageURL} location={location} destination={destination} />
+        <SelectedVehicle
+          vehicleImageURL={vehicleImageURL}
+          location={location}
+          destination={destination}
+        />
       </div>
     </div>
   );

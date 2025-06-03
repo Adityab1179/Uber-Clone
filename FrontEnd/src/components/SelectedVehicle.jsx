@@ -1,19 +1,40 @@
-import React from 'react'
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const SelectedVehicle = (props) => {
-    const {vehicleImageURL,location,destination} = props;
+  const { vehicleImageURL, location, destination } = props;
   return (
     <div className="fixed bottom-0 w-screen bg-white z-50 px-2 py-4 transition-all duration-800 ease-in-out transform translate-y-0 opacity-100">
-        <h1 className='text-2xl font-bold text-center w-full'>Confirm Your Ride</h1>
-        <div className='flex flex-col justify-center items-center gap-4 mt-4'>
-        <img className='h-40 w-full' src={vehicleImageURL} alt="Selected Vehicle" />
-            <div>{location}</div>
-            <div></div>
-            <div></div>
+      <h1 className="text-2xl font-bold text-center w-full">
+        Confirm Your Ride
+      </h1>
+      <div className="flex flex-col justify-center items-center gap-4 mt-4">
+        <img
+          className="h-40 w-full"
+          src={vehicleImageURL}
+          alt="Selected Vehicle"
+        />
+        <div className="flex items-center  gap-4 ">
+          <span>
+            <FontAwesomeIcon
+              icon={faLocationDot}
+              className="bg-[#eee] p-2 rounded-3xl"
+            />
+          </span>
+          <div className="w-full pr-10">
+            <h1 className="font-bold text-xl">{destination.name}</h1>
+            <h3 className="text-xs text-grey-400">{destination.address}</h3>
+          </div>
         </div>
-        <button className='bg-green-600 text-white w-full py-3 rounded-xl mt-4'>Confirm Ride</button>
+        <div></div>
+        <div></div>
+      </div>
+      <button className="bg-green-600 text-white w-full py-3 rounded-xl mt-4">
+        Confirm Ride
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default SelectedVehicle
+export default SelectedVehicle;
