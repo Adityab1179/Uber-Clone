@@ -21,20 +21,25 @@ FrontEnd/
 │   ├── App.jsx                 // App router and layout configuration
 │   ├── index.css               // Tailwind CSS imports and custom styles
 │   └── components/             // React components
-│       ├── Home.jsx            // Home page component
-│       ├── UserLogin.jsx       // User login component
-│       ├── CaptainLogin.jsx    // Captain login component
-│       ├── CaptainRegister.jsx // Captain registration component
-│       └── UserRegistser.jsx   // User registration component
+│       ├── Home.jsx
+│       ├── UserLogin.jsx
+│       ├── CaptainLogin.jsx
+│       ├── CaptainRegister.jsx
+│       ├── UserRegistser.jsx
+│       ├── LocationSearchPanel.jsx
+│       ├── VehiclePanel.jsx
+│       ├── SelectedVehicle.jsx
+│       ├── LookingForDriver.jsx
+│       └── WaitingForDriver.jsx
 ```
 
 ## Key Components
 
 - **main.jsx:**  
-  The main entry point for the React application. It renders the root component (`App`) into the DOM and applies React's StrictMode for highlighting potential problems.
+  The main entry point for the React application. Renders the root component (`App`) into the DOM, wraps it with context providers, and applies React's StrictMode.
 
 - **App.jsx:**  
-  Sets up the application's routing using `react-router-dom`. Defines the main layout and all routes, including home, user login, captain login, user registration, and captain registration.
+  Sets up the application's routing using `react-router-dom`. Defines the main layout and all routes, including home, login, registration, and protected user/captain home pages.
 
 - **Home.jsx:**  
   The landing page of the application. Displays the Uber logo and a "Get Started" section with a button that navigates users to the login page.
@@ -46,10 +51,25 @@ FrontEnd/
   Handles captain login. Collects email and password, submits them to the backend `/captains/login` endpoint, and provides a link to register as a captain or sign in as a user.
 
 - **UserRegistser.jsx:**  
-  Handles user registration. Collects first name, last name, email, and password, then submits the data to the backend `/users/signUp` endpoint. Includes a link for existing users to log in and displays a reCAPTCHA notice.
+  Handles user registration. Collects first name, last name, email, and password, then submits the data to the backend `/users/register` endpoint. Includes a link for existing users to log in and displays a reCAPTCHA notice.
 
 - **CaptainRegister.jsx:**  
-  Handles captain registration. Collects first name, last name, email, and password, then submits the data to the backend `/captains/login` endpoint. Also provides a link to sign in as a user.
+  Handles captain registration. Collects first name, last name, email, password, and vehicle details, then submits the data to the backend `/captains/register` endpoint. Also provides a link to sign in as a user.
+
+- **LocationSearchPanel.jsx:**  
+  Allows users to enter their pickup and destination locations, search for rides, and select from suggested locations. Expands/collapses for a better mobile experience and manages the ride booking flow.
+
+- **VehiclePanel.jsx:**  
+  Lets users choose a vehicle type (car, bike, auto) after entering their locations. Displays available options with estimated prices and times.
+
+- **SelectedVehicle.jsx:**  
+  Shows the selected vehicle details, pickup and destination, and allows the user to confirm the ride.
+
+- **LookingForDriver.jsx:**  
+  Displays a waiting screen while searching for a driver after ride confirmation, showing ride and vehicle details.
+
+- **WaitingForDriver.jsx:**  
+  Shows driver and ride details after a driver is found and the ride is confirmed.
 
 - **README.md:**  
   This file. Provides setup, usage, and component explanations.
@@ -98,19 +118,6 @@ You can preview the production build locally with:
 ```bash
 npm run preview
 ```
-
-Explanation of Key Components
-1. Routing and Layout:
-The application uses react-router-dom to handle navigation. The App.jsx file sets up the router with a primary layout component (AppLayout) and defines nested routes for various views such as home, login, and registration.
-
-2. Component Structure:
-Individual components such as UserLogin and CaptainLogin etc are responsible for rendering specific portions of the UI and handling user interactions through forms. Each component fetches the necessary data from the backend endpoints.
-
-3. Styling with Tailwind CSS:
-Tailwind CSS is used extensively across the project to quickly style components using utility-first classes. This approach makes it easier to implement responsive design and maintain a consistent look throughout the app.
-
-4. Development Workflow:
-Vite powers the development environment with features like hot module replacement (HMR) for a seamless coding experience and optimized build times for production deployment.
 
 ## Linting
 

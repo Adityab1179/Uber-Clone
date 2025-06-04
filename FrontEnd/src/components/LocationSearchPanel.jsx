@@ -7,6 +7,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import VehiclePanel from "./VehiclePanel";
 import SelectedVehicle from "./SelectedVehicle";
+import LookingForDriver from "./LookingForDriver";
+import WaitingForDriver from "./WaitingForDriver";
 
 const LocationSearchPanel = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -15,6 +17,10 @@ const LocationSearchPanel = () => {
   const [vehiclePanel, setvehiclePanel] = useState(false);
   const [selectedVehicle, setselectedVehicle] = useState(false);
   const [vehicleImageURL, setVehicleImageURL] = useState("");
+  const [price, setPrice] = useState("");
+  const [lookingForDriver, setLookingForDriver] = useState(false)
+  const [confirmRide, setConfirmRide] = useState(false);
+  
 
   const locationData = [
     {
@@ -91,7 +97,6 @@ const LocationSearchPanel = () => {
             onClick={() => {
               setIsExpanded(false);
               setvehiclePanel(true);
-              
             }}
           >
             Search
@@ -110,7 +115,7 @@ const LocationSearchPanel = () => {
               onClick={() => {
                 setvehiclePanel(true);
                 setIsExpanded(false);
-                setDestination(item);
+                setDestination(item.name);
               }}
               className="w-full"
             >
@@ -137,6 +142,7 @@ const LocationSearchPanel = () => {
           setselectedVehicle={setselectedVehicle}
           setVehicleImageURL={setVehicleImageURL}
           setDestination={setDestination}
+          setPrice={setPrice}
         />
       </div>
       <div
@@ -150,6 +156,42 @@ const LocationSearchPanel = () => {
           vehicleImageURL={vehicleImageURL}
           location={location}
           destination={destination}
+          setvehiclePanel={setvehiclePanel}
+          setselectedVehicle={setselectedVehicle}
+          setLookingForDriver={setLookingForDriver}
+        />
+      </div>
+      <div
+        className={`fixed bottom-0 w-full transition-all duration-700 ease-in-out transform ${
+          lookingForDriver
+            ? "translate-y-0 opacity-100 z-50"
+            : "translate-y-full opacity-0 pointer-events-none"
+        }`}
+      >
+        <LookingForDriver
+          vehicleImageURL={vehicleImageURL}
+          location={location}
+          destination={destination}
+          setvehiclePanel={setvehiclePanel}
+          setselectedVehicle={setselectedVehicle}
+          setConfirmRide={setConfirmRide}
+          setLookingForDriver={setLookingForDriver}
+        />
+      </div>
+      <div
+        className={`fixed bottom-0 w-full transition-all duration-700 ease-in-out transform ${
+          confirmRide
+            ? "translate-y-0 opacity-100 z-50"
+            : "translate-y-full opacity-0 pointer-events-none"
+        }`}
+      >
+        <WaitingForDriver
+          vehicleImageURL={vehicleImageURL}
+          location={location}
+          destination={destination}
+          setvehiclePanel={setvehiclePanel}
+          setselectedVehicle={setselectedVehicle}
+          setConfirmRide={setConfirmRide}
         />
       </div>
     </div>

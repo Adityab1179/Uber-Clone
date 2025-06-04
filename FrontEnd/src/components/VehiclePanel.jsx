@@ -17,7 +17,7 @@ const VehiclePanel = (props) => {
           size="lg"
           onClick={() => {
             setvehiclePanel(false);
-            setIsExpanded(false);
+            setIsExpanded(true);
           }}
           className="cursor-pointer transform transition-transform duration-500"
         />
