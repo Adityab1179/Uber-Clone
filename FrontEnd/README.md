@@ -30,7 +30,8 @@ FrontEnd/
 │       ├── VehiclePanel.jsx
 │       ├── SelectedVehicle.jsx
 │       ├── LookingForDriver.jsx
-│       └── WaitingForDriver.jsx
+│       ├── WaitingForDriver.jsx
+│       └── Riding.jsx
 ```
 
 ## Key Components
@@ -70,6 +71,9 @@ FrontEnd/
 
 - **WaitingForDriver.jsx:**  
   Shows driver and ride details after a driver is found and the ride is confirmed.
+
+- **Riding.jsx:**  
+  Displays the ongoing ride screen with driver, vehicle, and payment details.
 
 - **README.md:**  
   This file. Provides setup, usage, and component explanations.
