@@ -10,6 +10,7 @@ import UserProtectedWrapper from "./components/userProtectedWrapper";
 import UserLogout from "./components/UserLogout";
 import CaptainHome from "./components/CaptainHome";
 import CaptainProtectedWrapper from "./components/CaptainProtectedWrapper";
+import Riding from "./components/Riding";
 function AppLayout() {
   return (
     <div>
@@ -50,6 +51,15 @@ const appRouter = createBrowserRouter([
             <UserHome />
           </UserProtectedWrapper>
         ),
+      },
+      {
+        path:"/riding",
+        element:(
+          <UserProtectedWrapper>
+            <Riding/>
+          </UserProtectedWrapper>
+        )
+
       },
       {
         path:"/logout",
